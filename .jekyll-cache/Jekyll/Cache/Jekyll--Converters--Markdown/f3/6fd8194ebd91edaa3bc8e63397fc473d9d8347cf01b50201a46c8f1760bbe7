@@ -1,0 +1,35 @@
+I"�<!--more-->
+
+<p>Over summer last year, I picked up a fantastic book from Jaron Bradley, <a href="https://amzn.to/35daPGh">OS X Incident Response: Scripting and Analysis</a>, which covers the development of an incident response (ir) tool for macOS. Originally I was thinking about developing something to reverse engineer iOS apps, but in all honesty I’m not the best at RE so…¯\_(ツ)_/¯</p>
+
+<p>So macOS-ir is a <strong>very</strong> prototype tool to collect data from a compromised macOS device and analyse it. It’s written in bash and requires no tools to be installed to collect the information <sup id="fnref:1" role="doc-noteref"><a href="#fn:1" class="footnote">1</a></sup>.</p>
+
+<p>Once the data has been collected, it can be transferred using one of the following methods:</p>
+
+<ul>
+  <li>Save directly to USB drive</li>
+  <li>Save to a local disk image</li>
+  <li>Transfer over network using <code class="highlighter-rouge">netcat</code></li>
+</ul>
+
+<p>Of course, the data is encrypted (using <code class="highlighter-rouge">OpenSSL</code>) so if the USB is lost, for example, then any sensitive data that is collected, well nobody is getting it.</p>
+
+<p>The analysis script is designed to install any required tools. This prompts to install Xcode tools and installs Homebrew along with required tools using an included <code class="highlighter-rouge">Brewfile</code><sup id="fnref:2" role="doc-noteref"><a href="#fn:2" class="footnote">2</a></sup>.</p>
+
+<p>And bam. Give it the name of the USB drive, path to the <code class="highlighter-rouge">.dmg</code> on the disk image or start listening with <code class="highlighter-rouge">netcat</code> and it’ll start doing it’s stuff. The analysis isn’t (at this stage) designed to say “Hey, this is malicious” or “You know you have this malware installed” but it aims to summarise data and look for items that aren’t as they should be and highlight them.</p>
+
+<p>The output of this tool is a range of PDF files. A main PDF file (stored in <code class="highlighter-rouge">\tmp\[Compromised device hostname]\[hostname].pdf</code>) contains the summary of the data. Within the same folder a series of other secondary PDF files are generated which contain the rest of the data. For example, <code class="highlighter-rouge">.apps</code> that are unsigned are shown in the main PDF, but all the others are contained in a secondary. It normally goes, <strong>if the data is too large or can’t be narrowed down, it’s in a secondary PDF</strong>.</p>
+
+<p>And that is that. A very brief overview of <code class="highlighter-rouge">macOS-ir</code> (I’m trying to think of a shorter name, but I’m stuck). I’m thinking about writing more, breaking down the collection and analysis stages further. Maybe smaller posts including interesting things that I came across, maybe break it down function by function. I don’t know. But hey, this is a start.</p>
+
+<div class="footnotes" role="doc-endnotes">
+  <ol>
+    <li id="fn:1" role="doc-endnote">
+      <p>Although it does benefit if XCode tools is installed. Notarization of .apps can be checked. <a href="#fnref:1" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+    <li id="fn:2" role="doc-endnote">
+      <p>Tools can be installed without any analysis with the <code class="highlighter-rouge">-i</code> flag. <a href="#fnref:2" class="reversefootnote" role="doc-backlink">&#8617;</a></p>
+    </li>
+  </ol>
+</div>
+:ET

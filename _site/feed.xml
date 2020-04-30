@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en"><generator uri="https://jekyllrb.com/" version="4.0.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" hreflang="en" /><updated>2020-04-30T22:10:13+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">SynAckJack</title><subtitle>4th Year Ethical Hacker. I quite enjoy Incident Response and  Security.
+</subtitle><author><name>Jack</name><email>jack@synackjack.co.uk</email></author><entry><title type="html">macOS-ir: Prototype Tool To Help With Incident Response - Part 1</title><link href="http://localhost:4000/2020/04/28/macOSir.html" rel="alternate" type="text/html" title="macOS-ir: Prototype Tool To Help With Incident Response - Part 1" /><published>2020-04-28T00:00:00+01:00</published><updated>2020-04-28T00:00:00+01:00</updated><id>http://localhost:4000/2020/04/28/macOSir</id><content type="html" xml:base="http://localhost:4000/2020/04/28/macOSir.html">&lt;!--more--&gt;
+
+&lt;p&gt;Over summer last year, I picked up a fantastic book from Jaron Bradley, &lt;a href=&quot;https://amzn.to/35daPGh&quot;&gt;OS X Incident Response: Scripting and Analysis&lt;/a&gt;, which covers the development of an incident response (ir) tool for macOS. Originally I was thinking about developing something to reverse engineer iOS apps, but in all honesty I’m not the best at RE so…¯\_(ツ)_/¯&lt;/p&gt;
+
+&lt;p&gt;So macOS-ir is a &lt;strong&gt;very&lt;/strong&gt; prototype tool to collect data from a compromised macOS device and analyse it. It’s written in bash and requires no tools to be installed to collect the information &lt;sup id=&quot;fnref:1&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:1&quot; class=&quot;footnote&quot;&gt;1&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once the data has been collected, it can be transferred using one of the following methods:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Save directly to USB drive&lt;/li&gt;
+  &lt;li&gt;Save to a local disk image&lt;/li&gt;
+  &lt;li&gt;Transfer over network using &lt;code class=&quot;highlighter-rouge&quot;&gt;netcat&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Of course, the data is encrypted (using &lt;code class=&quot;highlighter-rouge&quot;&gt;OpenSSL&lt;/code&gt;) so if the USB is lost, for example, then any sensitive data that is collected, well nobody is getting it.&lt;/p&gt;
+
+&lt;p&gt;The analysis script is designed to install any required tools. This prompts to install Xcode tools and installs Homebrew along with required tools using an included &lt;code class=&quot;highlighter-rouge&quot;&gt;Brewfile&lt;/code&gt;&lt;sup id=&quot;fnref:2&quot; role=&quot;doc-noteref&quot;&gt;&lt;a href=&quot;#fn:2&quot; class=&quot;footnote&quot;&gt;2&lt;/a&gt;&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;And bam. Give it the name of the USB drive, path to the &lt;code class=&quot;highlighter-rouge&quot;&gt;.dmg&lt;/code&gt; on the disk image or start listening with &lt;code class=&quot;highlighter-rouge&quot;&gt;netcat&lt;/code&gt; and it’ll start doing it’s stuff. The analysis isn’t (at this stage) designed to say “Hey, this is malicious” or “You know you have this malware installed” but it aims to summarise data and look for items that aren’t as they should be and highlight them.&lt;/p&gt;
+
+&lt;p&gt;The output of this tool is a range of PDF files. A main PDF file (stored in &lt;code class=&quot;highlighter-rouge&quot;&gt;\tmp\[Compromised device hostname]\[hostname].pdf&lt;/code&gt;) contains the summary of the data. Within the same folder a series of other secondary PDF files are generated which contain the rest of the data. For example, &lt;code class=&quot;highlighter-rouge&quot;&gt;.apps&lt;/code&gt; that are unsigned are shown in the main PDF, but all the others are contained in a secondary. It normally goes, &lt;strong&gt;if the data is too large or can’t be narrowed down, it’s in a secondary PDF&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;And that is that. A very brief overview of &lt;code class=&quot;highlighter-rouge&quot;&gt;macOS-ir&lt;/code&gt; (I’m trying to think of a shorter name, but I’m stuck). I’m thinking about writing more, breaking down the collection and analysis stages further. Maybe smaller posts including interesting things that I came across, maybe break it down function by function. I don’t know. But hey, this is a start.&lt;/p&gt;
+
+&lt;div class=&quot;footnotes&quot; role=&quot;doc-endnotes&quot;&gt;
+  &lt;ol&gt;
+    &lt;li id=&quot;fn:1&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Although it does benefit if XCode tools is installed. Notarization of .apps can be checked. &lt;a href=&quot;#fnref:1&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+    &lt;li id=&quot;fn:2&quot; role=&quot;doc-endnote&quot;&gt;
+      &lt;p&gt;Tools can be installed without any analysis with the &lt;code class=&quot;highlighter-rouge&quot;&gt;-i&lt;/code&gt; flag. &lt;a href=&quot;#fnref:2&quot; class=&quot;reversefootnote&quot; role=&quot;doc-backlink&quot;&gt;&amp;#8617;&lt;/a&gt;&lt;/p&gt;
+    &lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/div&gt;</content><author><name>Jack</name><email>jack@synackjack.co.uk</email></author><category term="macOS-ir" /><summary type="html"></summary></entry></feed>
